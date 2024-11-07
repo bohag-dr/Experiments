@@ -9,7 +9,7 @@ namespace secretAndEquivalenceTesting.Test
         {
             // arrange
             var factory = CandidateFactory(out var name, out var age, out var party, out var altingetUrl, out var email);
-            var expected = new Candidate(name, age, party, altingetUrl);
+            var expected = new { Name = name, Age = age};
 
             // act
             var actual = factory.CreateCandidate(name, age, party, altingetUrl);
