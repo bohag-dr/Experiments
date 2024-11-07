@@ -18,7 +18,8 @@ namespace secretAndEquivalenceTesting.Test
             // assert
             Assert.Equal(expected, actual);
             Assert.Equivalent(expected, actual, true);
-            Assert.Equivalent(expected, actual, false);
+            Assert.Equivalent(expected, actualExtended, true);
+            Assert.Equivalent(expected, actualExtended, false);
 
         }
 
