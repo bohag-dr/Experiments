@@ -1,6 +1,8 @@
 using AutoFixture;
 using AutoFixture.Xunit2;
 using secretsAndEquivalenceTesting;
+using SemanticComparison;
+using SemanticComparison.Fluent;
 
 namespace secretAndEquivalenceTesting.Test
 {
@@ -12,18 +14,17 @@ namespace secretAndEquivalenceTesting.Test
             // arrange
             var fixture = new Fixture();
 
-            var expected = fixture.Build<Candidate>()
-                .WithAutoProperties()
-                .Create();
+            var candidate = fixture.Build<Candidate>().WithAutoProperties();
+            var expected = candidate.AsSource().OfLikeness<Candidate>();
 
 
             // act
             var actual = new CandidateFactory().CreateCandidate(name, age, party, url);
             
             // assert
-            Assert.Equivalent(expected, actual, true);
-            
+            expected.ShouldEqual(actual);
 
+            Assert.Equivalent(expected, actual, true);
         }
     }
 }
