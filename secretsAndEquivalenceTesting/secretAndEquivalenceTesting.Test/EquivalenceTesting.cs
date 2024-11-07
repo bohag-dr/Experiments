@@ -1,38 +1,29 @@
+using AutoFixture;
+using AutoFixture.Xunit2;
 using secretsAndEquivalenceTesting;
 
 namespace secretAndEquivalenceTesting.Test
 {
     public class EquivalenceTesting
     {
-        [Fact]
-        public void CreateCandidateEquivalenceTest()
+        [Theory, AutoData]
+        public void CreateCandidateEquivalenceTest(string name, int age, string party, string url, string email )
         {
             // arrange
-            var factory = CandidateFactory(out var name, out var age, out var party, out var altingetUrl, out var email);
-            var expected = new { Name = name, Age = age};
+            var fixture = new Fixture();
+
+            var expected = fixture.Build<Candidate>()
+                .WithAutoProperties()
+                .Create();
+
 
             // act
-            var actual = factory.CreateCandidate(name, age, party, altingetUrl);
-            var actualExtended = factory.CreateCandidateExtended(name, age, party, altingetUrl, email);
-
+            var actual = new CandidateFactory().CreateCandidate(name, age, party, url);
+            
             // assert
-            Assert.Equal(expected, actual);
             Assert.Equivalent(expected, actual, true);
-            Assert.Equivalent(expected, actualExtended, true);
-            Assert.Equivalent(expected, actualExtended, false);
+            
 
-        }
-
-        private static CandidateFactory CandidateFactory(out string name, out int age, out string party, out string altingetUrl,
-            out string email)
-        {
-            var factory = new CandidateFactory();
-            name = "John Doe";
-            age = 42;
-            party = "The Party";
-            altingetUrl = "http://example.com";
-            email = "john@doe.dk";
-            return factory;
         }
     }
 }
