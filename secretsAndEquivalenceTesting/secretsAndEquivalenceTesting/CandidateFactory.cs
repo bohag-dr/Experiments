@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace secretsAndEquivalenceTesting
 {
-    public class CandidateFactory
+    public interface ICandidateFactory
+    {
+        Candidate CreateCandidate(string name, int age, string party, string altingetUrl);
+        CandidateExtended CreateCandidateExtended(string name, int age, string party, string altingetUrl, string email);
+    }
+
+    public class CandidateFactory : ICandidateFactory
     {
         public CandidateFactory() { }
 
